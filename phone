@@ -1,0 +1,20 @@
+if [ $# -eq 0 ]
+then
+	echo "Usage: phone searchfor"
+	echo "(You didn't tell me what you want to search for.)"
+else
+	pattern=""
+	first_term=1
+	for term in "$@"; do
+		if [ "$first_term" -eq 1 ]; then
+			pattern="$term"
+			first_term=0
+		else
+			pattern="$pattern|$term"
+		fi
+	done
+
+	grep -Ei "$pattern" mydata.txt | awk -f display
+
+	exit 0
+fi
